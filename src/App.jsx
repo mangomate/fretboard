@@ -18,7 +18,7 @@ export default function App() {
           CHORD LIBRARY
         </button>
       </div>
-      {view === "fretboard" ? <Fretboard /> : <ChordVisualiser />}
+      {view === "fretboard" ? <Fretboard /> : <ChordLibrary />}
     </div>
   )
 }
