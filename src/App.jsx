@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Fretboard from "./Fretboard"
-import ChordVisualiser from "./ChordVisualiser"
+import ChordLibrary from "./chordlibrary"
 
 export default function App() {
   const [view, setView] = useState("fretboard")
