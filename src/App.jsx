@@ -111,23 +111,23 @@ const THEMES = {
 
 const mkSel = t => ({
   background:'transparent', border:`1px solid ${t.border}`, color:t.text,
-  padding:'5px 7px', fontSize:'11px', fontFamily:'inherit',
+  padding:'7px 10px', fontSize:'13px', fontFamily:'inherit',
   cursor:'pointer', outline:'none', appearance:'none', WebkitAppearance:'none',
 });
 const mkInp = t => ({
   background:'transparent', border:`1px solid ${t.border}`, color:t.text,
-  padding:'5px 4px', fontSize:'11px', fontFamily:'inherit',
-  outline:'none', textAlign:'center', width:'48px',
+  padding:'7px 4px', fontSize:'13px', fontFamily:'inherit',
+  outline:'none', textAlign:'center', width:'54px',
 });
 const mkBtn = (t, active=false) => ({
   background: active ? t.accent : 'transparent',
   border:`1px solid ${active ? t.accent : t.border}`,
   color: active ? t.bg : t.text,
-  padding:'5px 11px', cursor:'pointer', fontSize:'10px',
+  padding:'7px 14px', cursor:'pointer', fontSize:'12px',
   fontFamily:'inherit', letterSpacing:'1px', transition:'all 0.15s ease',
 });
 const mkPanel = t => ({
-  background:t.panelBg, border:`1px solid ${t.border}`, padding:'14px',
+  background:t.panelBg, border:`1px solid ${t.border}`, padding:'18px',
 });
 
 export default function Fretboard() {
@@ -173,17 +173,17 @@ export default function Fretboard() {
   const hasOpen  = frets[0] === 0;
   const fretCols = hasOpen ? frets.slice(1) : frets;
 
-  const fW   = Math.round(60 * zoom);
-  const sH   = Math.round(46 * zoom);
-  const oW   = Math.round(34 * zoom);
-  const nD   = Math.round(27 * zoom);
-  const fSz  = Math.max(8, Math.round(11 * zoom));
-  const lW   = Math.round(30 * zoom);
+  const fW   = Math.round(66 * zoom);
+  const sH   = Math.round(52 * zoom);
+  const oW   = Math.round(38 * zoom);
+  const nD   = Math.round(32 * zoom);
+  const fSz  = Math.max(10, Math.round(13 * zoom));
+  const lW   = Math.round(36 * zoom);
   const fT   = Math.max(1, Math.round(2 * zoom));
   const ntW  = Math.max(3, Math.round(6 * zoom));
-  const nrSz = Math.max(7, Math.round(9 * zoom));
-  const dtSz = Math.max(4, Math.round(7 * zoom));
-  const z6   = Math.round(6 * zoom);
+  const nrSz = Math.max(10, Math.round(12 * zoom));
+  const dtSz = Math.max(5, Math.round(8 * zoom));
+  const z6   = Math.round(7 * zoom);
 
   const fretBar = (side) => ({
     position:'absolute', [side]:0,
@@ -209,22 +209,26 @@ export default function Fretboard() {
   );
 
   return (
-    <div style={{ minHeight:'100vh', background:t.bg, fontFamily:'"Courier New", Courier, monospace', color:t.text, padding:'18px', boxSizing:'border-box' }}>
+    <div style={{ minHeight:'100vh', background:t.bg, fontFamily:'"Courier New", Courier, monospace', color:t.text, padding:'22px', boxSizing:'border-box' }}>
 
-      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'18px' }}>
+      {/* Header */}
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'22px' }}>
         <div>
-          <div style={{ fontSize:'24px', fontWeight:'bold', letterSpacing:'7px', color:t.accent, lineHeight:1 }}>FRETBOARD</div>
-          <div style={{ fontSize:'8px', letterSpacing:'4px', color:t.muted, marginTop:'4px' }}>SCALE VISUALIZER · STANDARD TUNING</div>
+          <div style={{ fontSize:'30px', fontWeight:'bold', letterSpacing:'7px', color:t.accent, lineHeight:1 }}>FRETBOARD</div>
+          <div style={{ fontSize:'11px', letterSpacing:'4px', color:t.muted, marginTop:'6px' }}>SCALE VISUALIZER · STANDARD TUNING</div>
         </div>
-        <button onClick={() => setTi((ti+1) % themeKeys.length)} style={{ ...mkBtn(t), border:`1px solid ${t.accent}`, color:t.accent, padding:'7px 15px', letterSpacing:'2px', fontSize:'9px' }}>
+        <button onClick={() => setTi((ti+1) % themeKeys.length)} style={{ ...mkBtn(t), border:`1px solid ${t.accent}`, color:t.accent, padding:'9px 18px', letterSpacing:'2px', fontSize:'11px' }}>
           ◈ {themeKeys[ti].toUpperCase()} ›
         </button>
       </div>
 
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:'10px', marginBottom:'14px' }}>
+      {/* Controls */}
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(240px, 1fr))', gap:'12px', marginBottom:'16px' }}>
+
+        {/* Scale A */}
         <div style={{ ...mkPanel(t), border:`1px solid ${dual ? t.dualA : t.accent}` }}>
-          <div style={{ fontSize:'8px', letterSpacing:'3px', color: dual ? t.dualA : t.accent, marginBottom:'10px' }}>{dual ? '● SCALE A' : '● SCALE'}</div>
-          <div style={{ display:'flex', gap:'6px', marginBottom:'7px' }}>
+          <div style={{ fontSize:'11px', letterSpacing:'3px', color: dual ? t.dualA : t.accent, marginBottom:'12px' }}>{dual ? '● SCALE A' : '● SCALE'}</div>
+          <div style={{ display:'flex', gap:'8px', marginBottom:'10px' }}>
             <select value={rootA} onChange={e => setRootA(+e.target.value)} style={mkSel(t)}>
               {NOTES_SHARP.map((_,i) => <option key={i} value={i}>{nms[i]}</option>)}
             </select>
@@ -234,16 +238,17 @@ export default function Fretboard() {
               ))}
             </select>
           </div>
-          <div style={{ fontSize:'8px', color:t.muted, marginBottom:'2px' }}>{SCALES[scaleA].map(i => IVLS[i]).join(' · ')}</div>
-          <div style={{ fontSize:'8px', color:t.text, opacity:0.5 }}>{SCALES[scaleA].map(i => nms[(rootA+i)%12]).join(' · ')}</div>
+          <div style={{ fontSize:'11px', color:t.muted, marginBottom:'3px' }}>{SCALES[scaleA].map(i => IVLS[i]).join(' · ')}</div>
+          <div style={{ fontSize:'11px', color:t.text, opacity:0.55 }}>{SCALES[scaleA].map(i => nms[(rootA+i)%12]).join(' · ')}</div>
         </div>
 
+        {/* Scale B */}
         <div style={{ ...mkPanel(t), border:`1px solid ${dual ? t.dualB : t.border}`, opacity: dual ? 1 : 0.58, transition:'opacity 0.3s' }}>
-          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'10px' }}>
-            <div style={{ fontSize:'8px', letterSpacing:'3px', color:t.dualB }}>● SCALE B</div>
-            <button onClick={() => setDual(!dual)} style={{ background: dual ? t.dualB : 'transparent', border:`1px solid ${t.dualB}`, color: dual ? '#000' : t.dualB, padding:'3px 9px', cursor:'pointer', fontSize:'8px', fontFamily:'inherit', letterSpacing:'2px' }}>{dual ? 'ON' : 'OFF'}</button>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'12px' }}>
+            <div style={{ fontSize:'11px', letterSpacing:'3px', color:t.dualB }}>● SCALE B</div>
+            <button onClick={() => setDual(!dual)} style={{ background: dual ? t.dualB : 'transparent', border:`1px solid ${t.dualB}`, color: dual ? '#000' : t.dualB, padding:'4px 12px', cursor:'pointer', fontSize:'11px', fontFamily:'inherit', letterSpacing:'2px' }}>{dual ? 'ON' : 'OFF'}</button>
           </div>
-          <div style={{ display:'flex', gap:'6px', marginBottom:'7px' }}>
+          <div style={{ display:'flex', gap:'8px', marginBottom:'10px' }}>
             <select value={rootB} onChange={e => setRootB(+e.target.value)} style={mkSel(t)} disabled={!dual}>
               {NOTES_SHARP.map((_,i) => <option key={i} value={i}>{nms[i]}</option>)}
             </select>
@@ -254,51 +259,54 @@ export default function Fretboard() {
             </select>
           </div>
           {dual && <>
-            <div style={{ fontSize:'8px', color:t.muted, marginBottom:'2px' }}>{SCALES[scaleB].map(i => IVLS[i]).join(' · ')}</div>
-            <div style={{ fontSize:'8px', color:t.text, opacity:0.5 }}>{SCALES[scaleB].map(i => nms[(rootB+i)%12]).join(' · ')}</div>
+            <div style={{ fontSize:'11px', color:t.muted, marginBottom:'3px' }}>{SCALES[scaleB].map(i => IVLS[i]).join(' · ')}</div>
+            <div style={{ fontSize:'11px', color:t.text, opacity:0.55 }}>{SCALES[scaleB].map(i => nms[(rootB+i)%12]).join(' · ')}</div>
           </>}
         </div>
 
+        {/* Settings */}
         <div style={mkPanel(t)}>
-          <div style={{ fontSize:'8px', letterSpacing:'3px', color:t.accent, marginBottom:'10px' }}>● SETTINGS</div>
-          <div style={{ display:'flex', alignItems:'center', gap:'6px', marginBottom:'8px' }}>
-            <span style={{ fontSize:'8px', opacity:0.65, minWidth:'32px', letterSpacing:'1px' }}>FRETS</span>
+          <div style={{ fontSize:'11px', letterSpacing:'3px', color:t.accent, marginBottom:'12px' }}>● SETTINGS</div>
+          <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'10px' }}>
+            <span style={{ fontSize:'11px', opacity:0.7, minWidth:'40px', letterSpacing:'1px' }}>FRETS</span>
             <input type="number" min="0" max="23" value={fretS} onChange={e => { const v=Math.max(0,Math.min(23,+e.target.value)); setFretS(v); if(v>=fretE) setFretE(Math.min(24,v+1)); }} style={mkInp(t)} />
-            <span style={{ opacity:0.35, fontSize:'12px' }}>—</span>
+            <span style={{ opacity:0.35, fontSize:'14px' }}>—</span>
             <input type="number" min="1" max="24" value={fretE} onChange={e => { const v=Math.max(1,Math.min(24,+e.target.value)); setFretE(v); if(v<=fretS) setFretS(Math.max(0,v-1)); }} style={mkInp(t)} />
           </div>
-          <div style={{ display:'flex', alignItems:'center', gap:'6px', marginBottom:'10px' }}>
-            <span style={{ fontSize:'8px', opacity:0.65, minWidth:'32px', letterSpacing:'1px' }}>ZOOM</span>
+          <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'12px' }}>
+            <span style={{ fontSize:'11px', opacity:0.7, minWidth:'40px', letterSpacing:'1px' }}>ZOOM</span>
             <button onClick={() => setZoom(z => Math.round(Math.max(0.5,z-0.1)*10)/10)} style={mkBtn(t)}>−</button>
-            <span style={{ fontSize:'10px', minWidth:'30px', textAlign:'center' }}>{zoom.toFixed(1)}×</span>
+            <span style={{ fontSize:'12px', minWidth:'34px', textAlign:'center' }}>{zoom.toFixed(1)}×</span>
             <button onClick={() => setZoom(z => Math.round(Math.min(2.5,z+0.1)*10)/10)} style={mkBtn(t)}>+</button>
-            <button onClick={() => setZoom(1)} style={{...mkBtn(t), padding:'5px 7px', fontSize:'9px', opacity:0.7}}>↺</button>
+            <button onClick={() => setZoom(1)} style={{...mkBtn(t), padding:'7px 10px', fontSize:'11px', opacity:0.7}}>↺</button>
           </div>
-          <div style={{ display:'flex', gap:'6px', flexWrap:'wrap' }}>
+          <div style={{ display:'flex', gap:'8px', flexWrap:'wrap' }}>
             <button onClick={() => setShowIvl(!showIvl)} style={mkBtn(t, showIvl)}>{showIvl ? 'INTERVALS' : 'NOTES'}</button>
             <button onClick={() => setUseFlats(!useFlats)} style={mkBtn(t, useFlats)}>{useFlats ? '♭ FLATS' : '♯ SHARPS'}</button>
           </div>
         </div>
       </div>
 
+      {/* Dual legend */}
       {dual && (
-        <div style={{ display:'flex', gap:'14px', marginBottom:'12px', flexWrap:'wrap', alignItems:'center' }}>
-          <span style={{ fontSize:'8px', letterSpacing:'2px', opacity:0.45 }}>KEY:</span>
+        <div style={{ display:'flex', gap:'16px', marginBottom:'14px', flexWrap:'wrap', alignItems:'center' }}>
+          <span style={{ fontSize:'11px', letterSpacing:'2px', opacity:0.45 }}>KEY:</span>
           {[{ color:t.dualA, label:`${nms[rootA]} ${scaleA} only` }, { color:t.dualB, label:`${nms[rootB]} ${scaleB} only` }, { color:t.shared, label:'Shared notes' }].map(({ color, label }) => (
-            <div key={label} style={{ display:'flex', alignItems:'center', gap:'5px' }}>
-              <div style={{ width:11, height:11, borderRadius:'50%', background:color, boxShadow:`0 0 5px ${color}aa` }} />
-              <span style={{ fontSize:'8px', letterSpacing:'1px' }}>{label}</span>
+            <div key={label} style={{ display:'flex', alignItems:'center', gap:'7px' }}>
+              <div style={{ width:13, height:13, borderRadius:'50%', background:color, boxShadow:`0 0 5px ${color}aa` }} />
+              <span style={{ fontSize:'11px', letterSpacing:'1px' }}>{label}</span>
             </div>
           ))}
         </div>
       )}
 
-      <div style={{ overflowX:'auto', overflowY:'visible', marginBottom:'14px' }}>
+      {/* Fretboard */}
+      <div style={{ overflowX:'auto', overflowY:'visible', marginBottom:'16px' }}>
         <div style={{ display:'inline-block', background:t.boardBg, border:`2px solid ${t.boardBorder}`, borderRadius:'6px', padding:`${Math.round(sH*0.38)}px ${Math.round(fW*0.22)}px` }}>
-          <FretNumRow mb={3} />
+          <FretNumRow mb={4} />
           {TUNING.map((_, si) => (
             <div key={si} style={{ display:'flex', alignItems:'center', height:`${sH}px` }}>
-              <div style={{ width:`${lW}px`, flexShrink:0, textAlign:'center', fontSize:`${Math.max(8, Math.round(10*zoom))}px`, color:t.stringColor, letterSpacing:'2px', fontWeight:'bold' }}>{STR_NAMES[si]}</div>
+              <div style={{ width:`${lW}px`, flexShrink:0, textAlign:'center', fontSize:`${Math.max(10, Math.round(12*zoom))}px`, color:t.stringColor, letterSpacing:'2px', fontWeight:'bold' }}>{STR_NAMES[si]}</div>
               {hasOpen && (() => {
                 const ni = getNote(si, 0);
                 return (
@@ -326,42 +334,44 @@ export default function Fretboard() {
               })}
             </div>
           ))}
-          <FretNumRow mt={3} />
+          <FretNumRow mt={4} />
         </div>
       </div>
 
+      {/* Interval legend */}
       {!dual && (
-        <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', marginBottom:'12px', alignItems:'center' }}>
-          <span style={{ fontSize:'8px', letterSpacing:'2px', opacity:0.45, marginRight:'4px' }}>SCALE:</span>
+        <div style={{ display:'flex', gap:'8px', flexWrap:'wrap', marginBottom:'14px', alignItems:'center' }}>
+          <span style={{ fontSize:'11px', letterSpacing:'2px', opacity:0.45, marginRight:'4px' }}>SCALE:</span>
           {SCALES[scaleA].map(i => {
             const isR = i === 0;
             return (
-              <div key={i} style={{ display:'flex', alignItems:'center', gap:'4px' }}>
-                <div style={{ width:'20px', height:'20px', borderRadius:'50%', background: isR ? t.rootNote : t.intervalNote, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'8px', fontWeight:'bold', color: isR ? t.rootText : t.intervalText, boxShadow:`0 0 4px ${isR ? t.rootNote : t.intervalNote}88` }}>{IVLS[i]}</div>
-                <span style={{ fontSize:'8px', color:t.muted }}>{nms[(rootA+i)%12]}</span>
+              <div key={i} style={{ display:'flex', alignItems:'center', gap:'6px' }}>
+                <div style={{ width:'24px', height:'24px', borderRadius:'50%', background: isR ? t.rootNote : t.intervalNote, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'10px', fontWeight:'bold', color: isR ? t.rootText : t.intervalText, boxShadow:`0 0 4px ${isR ? t.rootNote : t.intervalNote}88` }}>{IVLS[i]}</div>
+                <span style={{ fontSize:'11px', color:t.muted }}>{nms[(rootA+i)%12]}</span>
               </div>
             );
           })}
         </div>
       )}
 
-      <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
-        <div style={{ ...mkPanel(t), padding:'9px 14px', fontSize:'9px', letterSpacing:'1px' }}>
+      {/* Summary bar */}
+      <div style={{ display:'flex', gap:'12px', flexWrap:'wrap' }}>
+        <div style={{ ...mkPanel(t), padding:'11px 16px', fontSize:'12px', letterSpacing:'1px' }}>
           <span style={{ color: dual ? t.dualA : t.accent }}>◆ {nms[rootA]} {scaleA}</span>
-          <span style={{ marginLeft:'10px', opacity:0.48 }}>{SCALES[scaleA].map(i => nms[(rootA+i)%12]).join(' · ')}</span>
+          <span style={{ marginLeft:'12px', opacity:0.48 }}>{SCALES[scaleA].map(i => nms[(rootA+i)%12]).join(' · ')}</span>
         </div>
         {dual && (
-          <div style={{ ...mkPanel(t), padding:'9px 14px', fontSize:'9px', letterSpacing:'1px', border:`1px solid ${t.dualB}` }}>
+          <div style={{ ...mkPanel(t), padding:'11px 16px', fontSize:'12px', letterSpacing:'1px', border:`1px solid ${t.dualB}` }}>
             <span style={{ color:t.dualB }}>◆ {nms[rootB]} {scaleB}</span>
-            <span style={{ marginLeft:'10px', opacity:0.48 }}>{SCALES[scaleB].map(i => nms[(rootB+i)%12]).join(' · ')}</span>
+            <span style={{ marginLeft:'12px', opacity:0.48 }}>{SCALES[scaleB].map(i => nms[(rootB+i)%12]).join(' · ')}</span>
           </div>
         )}
         {dual && (() => {
           const shared = [...setA].filter(n => setB.has(n)).map(n => nms[n]);
           return shared.length > 0 ? (
-            <div style={{ ...mkPanel(t), padding:'9px 14px', fontSize:'9px', letterSpacing:'1px', border:`1px solid ${t.shared}` }}>
+            <div style={{ ...mkPanel(t), padding:'11px 16px', fontSize:'12px', letterSpacing:'1px', border:`1px solid ${t.shared}` }}>
               <span style={{ color:t.shared }}>◆ Shared</span>
-              <span style={{ marginLeft:'10px', opacity:0.48 }}>{shared.join(' · ')}</span>
+              <span style={{ marginLeft:'12px', opacity:0.48 }}>{shared.join(' · ')}</span>
             </div>
           ) : null;
         })()}
