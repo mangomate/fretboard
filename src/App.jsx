@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Fretboard from "./Fretboard"
-import ChordLibrary from "./ChordLibrary"
+import ChordVisualiser from "./ChordVisualiser"
 
 export default function App() {
   const [view, setView] = useState("fretboard")
@@ -18,7 +18,7 @@ export default function App() {
           CHORD LIBRARY
         </button>
       </div>
-      {view === "fretboard" ? <Fretboard /> : <ChordLibrary />}
+      {view === "fretboard" ? <Fretboard /> : <ChordVisualiser />}
     </div>
   )
 }
